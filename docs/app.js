@@ -35,26 +35,32 @@ async function load() {
 }
 
 async function insert(entry) {
-  const r = await fetch(API, {
-    method: 'POST',
-    headers: { ...SB, 'Prefer': 'return=minimal' },
-    body: JSON.stringify(entry),
-  });
-  return r.ok;
+  try {
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: { ...SB, 'Prefer': 'return=minimal' },
+      body: JSON.stringify(entry),
+    });
+    return r.ok;
+  } catch { return false; }
 }
 
 async function remove(id) {
-  const r = await fetch(`${API}?id=eq.${id}`, { method: 'DELETE', headers: SB });
-  return r.ok;
+  try {
+    const r = await fetch(`${API}?id=eq.${id}`, { method: 'DELETE', headers: SB });
+    return r.ok;
+  } catch { return false; }
 }
 
 async function update(id, data) {
-  const r = await fetch(`${API}?id=eq.${id}`, {
-    method: 'PATCH',
-    headers: { ...SB, 'Prefer': 'return=minimal' },
-    body: JSON.stringify(data),
-  });
-  return r.ok;
+  try {
+    const r = await fetch(`${API}?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { ...SB, 'Prefer': 'return=minimal' },
+      body: JSON.stringify(data),
+    });
+    return r.ok;
+  } catch { return false; }
 }
 
 // ── Render ────────────────────────────────────────────────────────────────────
